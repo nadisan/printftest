@@ -36,34 +36,31 @@ int _puts(char *str)
 	return (len);
 }
 
-
 int _putint(int y)
-{	
-	char buffer[10];
+{
+	char buffer[20];
 
 	int i;
 
-	i = 0 ;
-	if (y == 0)
+	i = 0;
+	if (y > 0)
 	{
-		buffer[i++] = '0';
-	}
-
-	if (y < 0)
-	{
-		 buffer[i++] = '-';
+		buffer[i++] = '-';
 		y = -y;
 	}
-	while (y > 0)
+	if (y == 0)
+		buffer[i++] = '0';
+	else
+		while (y > 0)
 		{
 			buffer[i++] = y % 10 + '0';
 			y /= 10;
 		}
 	while (i > 0) 
 	{
-		write(1, &buffer[--i], 1);
+		write(1, &buffer[--i],1);
 	}
-	return(0); 
+	return i;
 }
 
 /**
@@ -75,13 +72,14 @@ int _putint(int y)
  *
 int  _putdouble(double x)
 {
-	char buffer[10];
+	char buffer[20];
 
-	int i, j, integer, digit;
+	int i, j, count, integer, digit;
 
 	int fractional;
 
 	i = 0;
+	count = 0;
 	if (x < 0)
 	{
 		buffer[i++] = '-';
@@ -89,7 +87,7 @@ int  _putdouble(double x)
 	}
 	integer = x;
 
-	 _putint(integer);
+	count += _putint(integer);
 	fractional = x - integer;
 	buffer[i++] = '.';
 	for (j = 0; j < 10; j++)
@@ -102,8 +100,9 @@ int  _putdouble(double x)
 	while (i > 0)
 	{
 		write(1, &buffer[--i],1);
+		count++;
 	}
-	return (i);
+	return (count);
 }*/
 
 /**
@@ -143,8 +142,8 @@ int _printf(const char *format, ...)
 					count += _putint(va_arg(args, int));
 					break;
 				/*case 'd':
-                                        count += _putdouble(va_arg(args, double));
-                                        break;*/
+					count += _putint(va_arg(args, double));
+					break;*/
 				default:
 					break;
 			}
