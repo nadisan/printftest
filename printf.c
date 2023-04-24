@@ -27,11 +27,6 @@ int _puts(char *str)
 {
 	int len = 0;
 
-	if (str == NULL || str == 0)
-	{
-		_puts("(null)");
-		return(0);
-	}
 	while (*str != '\0')
 	{
 		_writechar(*str);
